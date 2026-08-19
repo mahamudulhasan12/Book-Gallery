@@ -1,4 +1,4 @@
-import 'package:api/view/home_screen.dart';
+import 'package:api/view/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 

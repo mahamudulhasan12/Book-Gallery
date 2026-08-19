@@ -1,5 +1,6 @@
 import 'package:api/custom_widget/app_text.dart';
 import 'package:api/datbase/api/app_data.dart';
+import 'package:api/view/home/view%20book/view_book.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -97,7 +98,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ElevatedButton(onPressed: (){}, child: AppText(text: "View More",tWeight: FontWeight.bold,))
+                        ElevatedButton(onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewBookScreen()));
+                        }, child: AppText(text: "View More",tWeight: FontWeight.bold,))
                       ],
                     )
                   ],
