@@ -16,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
     var a = await AppData().getData();
     data.clear();
     data.addAll(a);
+    setState(() {});
   }
 
   @override
@@ -27,18 +28,21 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: AppText(text: "All",tWeight: FontWeight.bold,tSize: 16,),
+      appBar: AppBar(
+        title: AppText(text: "All", tWeight: FontWeight.bold, tSize: 16),
         actions: [
-          AppText(text: "${data.length} Stock",tWeight: FontWeight.bold,),
-          SizedBox(width: 15,)
+          AppText(text: "${data.length} Stock", tWeight: FontWeight.bold),
+          SizedBox(width: 15),
         ],
       ),
       body: GridView.builder(
+        shrinkWrap: true,
+        physics: ScrollPhysics(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           // mainAxisSpacing: 5,
           // crossAxisSpacing: 2,
-          mainAxisExtent: 200
+          mainAxisExtent: 200,
           // childAspectRatio: 0.99
         ),
         itemCount: data.length,
@@ -59,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Icon(Icons.menu_book),
 
                         AppText(
-                          text: "# ${data[index]["id"]}",
+                          text: "#${data[index]["id"]}",
                           tWeight: FontWeight.bold,
                           tSize: 15,
                         ),
@@ -79,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         const SizedBox(width: 5),
                         AppText(
                           text: "${data[index]['pageCount']}",
-                          tSize: 18,
+                          tSize: 16,
                           tWeight: FontWeight.bold,
                         ),
                       ],
@@ -95,14 +99,26 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
+                    SizedBox(height: 5),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ElevatedButton(onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewBookScreen()));
-                        }, child: AppText(text: "View More",tWeight: FontWeight.bold,))
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ViewBookScreen(),
+                              ),
+                            );
+                          },
+                          child: AppText(
+                            text: "View More",
+                            tWeight: FontWeight.bold,
+                          ),
+                        ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),

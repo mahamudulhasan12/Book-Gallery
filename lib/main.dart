@@ -1,4 +1,5 @@
 import 'package:api/view/home/home_screen.dart';
+import 'package:api/view/note_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -18,7 +19,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(),
-      home: HomeScreen(),
+      home: NoteScreen(),
     );
   }
 }
