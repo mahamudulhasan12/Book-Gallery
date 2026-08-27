@@ -19,11 +19,11 @@ class _NoteScreenState extends State<NoteScreen> {
     // var d = await NoteData().getNoteData();
     // data.addAll(d);
     // log("-----${data.length}---");
-    await NoteData().getNoteData();
-    await NoteData().getDetailsData();
-    await NoteData().getCreateData();
-    await NoteData().getDetailsData();
-    await NoteData().getUpdateData();
+    // await NoteData().getNoteData();
+    // await NoteData().getDetailsData();
+    // await NoteData().getCreateData();
+    // await NoteData().getDetailsData();
+    // await NoteData().getUpdateData();
     // setState(() {
     //
     // });
