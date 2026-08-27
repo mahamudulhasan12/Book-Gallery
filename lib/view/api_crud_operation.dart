@@ -44,7 +44,7 @@ class _ApiCrudOperationState extends State<ApiCrudOperation> {
           Center(
             child: ElevatedButton(
               onPressed: () {
-
+                NoteData().getDetailsData();
               },
               child: AppText(text: "Details Data"),
             ),
@@ -52,7 +52,7 @@ class _ApiCrudOperationState extends State<ApiCrudOperation> {
           Center(
             child: ElevatedButton(
               onPressed: () {
-
+                NoteData().getCreateData();
               },
 
               child: AppText(text: "Create Data"),
@@ -61,7 +61,7 @@ class _ApiCrudOperationState extends State<ApiCrudOperation> {
           Center(
             child: ElevatedButton(
               onPressed: () {
-
+                NoteData().getUpdateData();
               },
               child: AppText(text: "Update Data"),
             ),
@@ -69,7 +69,7 @@ class _ApiCrudOperationState extends State<ApiCrudOperation> {
           Center(
             child: ElevatedButton(
               onPressed: () {
-
+                NoteData().getDeleteData(8);
               },
               child: AppText(text: "Delete Data"),
             ),
