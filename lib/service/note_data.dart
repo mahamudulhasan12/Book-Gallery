@@ -3,18 +3,18 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 
 class NoteData {
-  getNoteData() async {
+  Future<List<Map<String,dynamic>>> getNoteData() async {
     Uri url = Uri.parse("https://b5.dokanibahe.com/api/v1/notes");
     var res = await http.get(url);
-    // log("=====${res.statusCode}===");
+
+
     if (res.statusCode == 200) {
-      var data = jsonDecode(res.body);
-      // log("======${data}====");
-      log("Title: ${data['data'][0]}");
-    } else if (res.statusCode == 404) {
-      log("Data Not Found");
-    } else {
-      log("Not Found");
+      var jsonData = jsonDecode(res.body);
+      List<Map<String,dynamic>> note = List<Map<String,dynamic>>.from(jsonData['data']);
+      return note;
+
+    }else {
+      return[];
     }
   }
 
