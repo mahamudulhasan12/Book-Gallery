@@ -3,18 +3,18 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 
 class NoteData {
-  Future<List<Map<String,dynamic>>> getNoteData() async {
+  Future<List<Map<String, dynamic>>> getNoteData() async {
     Uri url = Uri.parse("https://b5.dokanibahe.com/api/v1/notes");
     var res = await http.get(url);
 
-
     if (res.statusCode == 200) {
       var jsonData = jsonDecode(res.body);
-      List<Map<String,dynamic>> note = List<Map<String,dynamic>>.from(jsonData['data']);
+      List<Map<String, dynamic>> note = List<Map<String, dynamic>>.from(
+        jsonData['data'],
+      );
       return note;
-
-    }else {
-      return[];
+    } else {
+      return [];
     }
   }
 
@@ -33,25 +33,31 @@ class NoteData {
     }
   }
 
-  var add = {"title": "Note App ", "details": "Mahamudul Hasan Testing"};
-  getCreateData() async {
+  Future<bool> getCreateData({
+    required String title,
+    required String details,
+  }) async {
     Uri url = Uri.parse("https://b5.dokanibahe.com/api/v1/notes");
+    var add = {"title": title, "details": details};
     var res = await http.post(
       url,
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
       },
+
       body: jsonEncode(add),
     );
 
     if (res.statusCode == 201) {
       log("Note Add Sucessfully");
-    } else if (res.statusCode == 422) {
-      log("========${res.statusCode}====");
+      return true;
+    } else {
+      return false;
     }
   }
 
+  var body = {"title": "Hello", "details": "Developer"};
   getUpdateData() async {
     Uri url = Uri.parse("https://b5.dokanibahe.com/api/v1/notes/8");
     var res = await http.put(
@@ -60,7 +66,7 @@ class NoteData {
         "Accept": "application/json",
         "Content-Type": "application/json",
       },
-      body: jsonEncode(add),
+      body: jsonEncode(body),
     );
     if (res.statusCode == 200) {
       log("===${res.body}=");

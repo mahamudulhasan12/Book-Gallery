@@ -1,4 +1,5 @@
 import 'package:api/custom_widget/app_text.dart';
+import 'package:api/service/note_data.dart';
 import 'package:flutter/material.dart';
 
 class NoteAddScreen extends StatefulWidget {
@@ -9,20 +10,35 @@ class NoteAddScreen extends StatefulWidget {
 }
 
 class _NoteAddScreenState extends State<NoteAddScreen> {
+  TextEditingController titleController = TextEditingController();
+  TextEditingController detailsController= TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: AppText(text: "Add Note",tWeight: FontWeight.bold,tSize: 18,),
+        title: AppText(text: "Add Note", tWeight: FontWeight.bold, tSize: 18),
         actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.check,size: 30,)),
-          SizedBox(width: 10,),
-        ]
+          IconButton(
+              onPressed: () async{
+                setState(() {
+
+                });
+                String titleData = titleController.text.trim();
+                String description = detailsController.text.trim();
+                if(titleData.isEmpty || description.isEmpty){
+                  return;
+                };
+                await NoteData().getCreateData(title: titleData, details: description);
+                Navigator.pop(context);
+          }, icon: Icon(Icons.check, size: 30)),
+          SizedBox(width: 10),
+        ],
       ),
       body: ListView(
         padding: EdgeInsets.all(10),
         children: [
           TextField(
+            controller: titleController,
             maxLines: 1,
             decoration: InputDecoration(
               // prefixIcon: Icon(Icons.title),
@@ -30,20 +46,21 @@ class _NoteAddScreenState extends State<NoteAddScreen> {
               hintStyle: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Colors.grey
+                color: Colors.grey,
               ),
               border: InputBorder.none,
             ),
           ),
-          SizedBox(height: 20,),
+          SizedBox(height: 20),
           TextField(
+            controller: detailsController,
             maxLines: 10,
             decoration: InputDecoration(
               hintText: "Descripton",
               hintStyle: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey,
               ),
               border: InputBorder.none,
             ),
@@ -52,11 +69,29 @@ class _NoteAddScreenState extends State<NoteAddScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orange,
-        onPressed: () {
+        onPressed: () async{
+          setState(() {
 
+          });
+          String titleData = titleController.text.trim();
+          String description = detailsController.text.trim();
+          if(titleData.isEmpty || description.isEmpty){
+            return;
+          };
+          var result =await NoteData().getCreateData(title: titleData, details: description);
+          if(result == true){
+            setState(() {
+
+            });
+            NoteData().getNoteData();
+          }
+          Navigator.pop(context);
         },
-        child: AppText(text: "Save",colors: Colors.white,tWeight: FontWeight.bold,)
-
+        child: AppText(
+          text: "Save",
+          colors: Colors.white,
+          tWeight: FontWeight.bold,
+        ),
       ),
     );
   }
