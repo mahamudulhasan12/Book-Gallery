@@ -32,7 +32,9 @@ class _NoteAddScreenState extends State<NoteAddScreen> {
                 var addData =await NoteData().getCreateData(title: titleData, details: description);
                 Navigator.pop(context,addData);
                 if(addData != null){
-                  widget.listData.add(addData);
+                 setState(() {
+                   widget.listData.add(addData);
+                 });
                 }
           }, icon: Icon(Icons.check, size: 30)),
           SizedBox(width: 10),
