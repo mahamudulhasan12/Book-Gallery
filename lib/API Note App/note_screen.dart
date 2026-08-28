@@ -48,9 +48,15 @@ class _NoteScreenState extends State<NoteScreen> {
                 itemCount: listData.length,
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailsScreen(data: listData, index: index,)));
-                  },
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              DetailsScreen(data: listData, index: index),
+                        ),
+                      );
+                    },
                     child: Card(
                       // color: Colors.white,
                       elevation: 3,
@@ -58,35 +64,43 @@ class _NoteScreenState extends State<NoteScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
                           children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                AppText(
-                                  text: "${listData[index]['title']}",
-                                  tSize: 15,
-                                  tOverflow: TextOverflow.ellipsis,
-                                  maxline: 1,
-                                  tWeight: FontWeight.bold,
-                                ),
-                                AppText(
-                                  text: "${listData[index]['details']}",
-                                  maxline: 20,
-                                  tSize: 13,
-                                  tOverflow: TextOverflow.ellipsis,
-                                ),
-                                Row(
-                                  spacing: 5,
-                                  children: [
-                                    Icon(
-                                      Icons.folder,
-                                      size: 15,
-                                      color: Colors.grey,
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  AppText(
+                                    text: "${listData[index]['title']}",
+                                    tSize: 15,
+                                    tOverflow: TextOverflow.ellipsis,
+                                    maxline: 1,
+                                    tWeight: FontWeight.bold,
+                                  ),
+                                  RichText(
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    softWrap: true,
+                                    text: TextSpan(
+                                      text: "${listData[index]['details']}",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                      ),
                                     ),
-                                    AppText(text: "Uncatogrise", tSize: 10),
-                                  ],
-                                ),
-                              ],
+                                  ),
+                                  Row(
+                                    spacing: 5,
+                                    children: [
+                                      Icon(
+                                        Icons.folder,
+                                        size: 15,
+                                        color: Colors.grey,
+                                      ),
+                                      AppText(text: "Uncatogrise", tSize: 10),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -99,20 +113,18 @@ class _NoteScreenState extends State<NoteScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orange,
 
-            onPressed: () async {
-              final result = await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => NoteAddScreen(),
-                ),
-              );
+        onPressed: () async {
+          final result = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => NoteAddScreen()),
+          );
 
-              if (result == true) {
-                NoteData().getNoteData();
-              }
-            },
+          if (result == true) {
+            NoteData().getNoteData();
+          }
+        },
 
-        child: Icon(Icons.add,size: 30,color: Colors.white,),
+        child: Icon(Icons.add, size: 30, color: Colors.white),
       ),
     );
   }

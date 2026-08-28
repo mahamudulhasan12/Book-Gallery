@@ -21,7 +21,17 @@ class _DetailsScreenState extends State<DetailsScreen> {
         children: [
           AppText(text: widget.data[widget.index]['title'],tSize: 16,tWeight: FontWeight.bold,maxline: 2,tOverflow: TextOverflow.ellipsis,),
           SizedBox(height: 10,),
-          AppText(text: widget.data[widget.index]['details'],tSize: 14,),
+          RichText(
+            softWrap: true,
+            text: TextSpan(
+              children: [
+                TextSpan(text: widget.data[widget.index]['details'],style: TextStyle(
+                  fontSize: 13,
+                  color: Colors.black
+                )),
+              ]
+            ),
+          )
         ],
       ),
     );
