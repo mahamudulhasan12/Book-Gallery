@@ -3,8 +3,8 @@ import 'package:api/service/note_data.dart';
 import 'package:flutter/material.dart';
 
 class NoteAddScreen extends StatefulWidget {
-  const NoteAddScreen({super.key});
-
+  const NoteAddScreen({super.key, required this.listData});
+  final List<dynamic> listData;
   @override
   State<NoteAddScreen> createState() => _NoteAddScreenState();
 }
@@ -23,13 +23,17 @@ class _NoteAddScreenState extends State<NoteAddScreen> {
                 setState(() {
 
                 });
-                String titleData = titleController.text.trim();
-                String description = detailsController.text.trim();
+                String titleData = titleController.text;
+                String description = detailsController.text;
                 if(titleData.isEmpty || description.isEmpty){
                   return;
                 };
-                await NoteData().getCreateData(title: titleData, details: description);
-                Navigator.pop(context);
+
+                var addData =await NoteData().getCreateData(title: titleData, details: description);
+                Navigator.pop(context,addData);
+                if(addData != null){
+                  widget.listData.add(addData);
+                }
           }, icon: Icon(Icons.check, size: 30)),
           SizedBox(width: 10),
         ],

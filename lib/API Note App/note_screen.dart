@@ -19,7 +19,7 @@ class _NoteScreenState extends State<NoteScreen> {
   faceData() async {
     listData.clear();
 
-    Future.delayed(Duration(seconds: 3));
+    Future.delayed(Duration(microseconds: 500));
     var data = await NoteData().getNoteData();
     // await NoteData().getCreateData(title: "", details: "");
     // log("====$data========");
@@ -116,7 +116,7 @@ class _NoteScreenState extends State<NoteScreen> {
         onPressed: () async {
           final result = await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => NoteAddScreen()),
+            MaterialPageRoute(builder: (context) => NoteAddScreen(listData: listData,)),
           );
 
           if (result == true) {
