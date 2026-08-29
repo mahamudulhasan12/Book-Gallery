@@ -73,14 +73,15 @@ class NoteData {
     }
   }
 
-  getDeleteData(int id) async {
+  Future<bool> getDeleteData(int id) async {
     Uri url = Uri.parse("https://b5.dokanibahe.com/api/v1/notes/$id");
     var res = await http.delete(url);
     if (res.statusCode == 200 || res.statusCode == 204) {
-      log("Note Delete Sucessfully");
+      return true;
     } else if (res.statusCode == 404) {
-      log("Data Not Found");
+      return false;
     } else {
+      return false;
       log("Delete Failed ${res.statusCode}");
     }
   }

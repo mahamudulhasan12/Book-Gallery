@@ -15,16 +15,60 @@ class NoteScreen extends StatefulWidget {
 
 class _NoteScreenState extends State<NoteScreen> {
   List listData = [];
+  Future<void> deleteNote(int id, int index)async{
+    bool? confirmDelete = await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Delete Note"),
+          content: const Text(
+            "Are you sure you want to delete this note?",
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, false);
+              },
+              child: const Text("Cancel"),
+            ),
 
-  faceData() async {
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
+              child: const Text("Delete",style: TextStyle(color: Colors.white),),style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.redAccent,
+            ),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirmDelete != true) {
+      return;
+    }
+    var sucess =await NoteData().getDeleteData(id);
+    if (sucess) {
+      setState(() {
+        listData.removeAt(index);
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Note deleted successfully"),
+        ),
+      );
+    }
+  }
+
+  void faceData() async {
     listData.clear();
 
     Future.delayed(Duration(microseconds: 500));
     var data = await NoteData().getNoteData();
     // await NoteData().getCreateData(title: "", details: "");
-    // log("====$data========");
     listData.addAll(data);
-    // log("======$data====");
+
     setState(() {});
   }
 
@@ -102,6 +146,13 @@ class _NoteScreenState extends State<NoteScreen> {
                                 ],
                               ),
                             ),
+                            IconButton(
+                              onPressed: () {
+
+                                deleteNote(listData[index]['id'], index);
+                              },
+                              icon: Icon(Icons.delete),
+                            ),
                           ],
                         ),
                       ),
@@ -116,14 +167,15 @@ class _NoteScreenState extends State<NoteScreen> {
         onPressed: () async {
           final result = await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => NoteAddScreen(listData: listData,)),
+            MaterialPageRoute(
+              builder: (context) => NoteAddScreen(listData: listData),
+            ),
           );
 
           if (result == true) {
             NoteData().getNoteData();
           }
         },
-
         child: Icon(Icons.add, size: 30, color: Colors.white),
       ),
     );
