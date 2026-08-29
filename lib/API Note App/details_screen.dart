@@ -1,3 +1,4 @@
+import 'package:api/API%20Note%20App/edit_screen.dart';
 import 'package:api/custom_widget/app_text.dart';
 import 'package:flutter/material.dart';
 
@@ -33,6 +34,19 @@ class _DetailsScreenState extends State<DetailsScreen> {
             ),
           )
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.orange,
+
+        onPressed: () async {
+          final result = await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>NoteEditScreeen(),
+            ),
+          );
+        },
+        child: Icon(Icons.edit, size: 30, color: Colors.white),
       ),
     );
   }

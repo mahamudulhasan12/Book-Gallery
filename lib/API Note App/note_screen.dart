@@ -64,12 +64,13 @@ class _NoteScreenState extends State<NoteScreen> {
   void faceData() async {
     listData.clear();
 
-    Future.delayed(Duration(microseconds: 500));
+    Future.delayed(Duration(microseconds: 100));
     var data = await NoteData().getNoteData();
     // await NoteData().getCreateData(title: "", details: "");
-    listData.addAll(data);
 
-    setState(() {});
+    setState(() {
+      listData.addAll(data);
+    });
   }
 
   @override

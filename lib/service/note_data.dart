@@ -57,9 +57,13 @@ class NoteData {
     }
   }
 
-  var body = {"title": "Hello", "details": "Developer"};
-  getUpdateData() async {
+  // var body = {"title": "Hello", "details": "Developer"};
+  Future<bool> getUpdateData({required String title, required String details}) async {
     Uri url = Uri.parse("https://b5.dokanibahe.com/api/v1/notes/8");
+    var body = {
+      "title" : title,
+      "details":details,
+    };
     var res = await http.put(
       url,
       headers: {
@@ -69,7 +73,10 @@ class NoteData {
       body: jsonEncode(body),
     );
     if (res.statusCode == 200) {
-      log("===${res.body}=");
+      return true;
+
+    }else{
+      return false;
     }
   }
 

@@ -61,7 +61,7 @@ class _ApiCrudOperationState extends State<ApiCrudOperation> {
           Center(
             child: ElevatedButton(
               onPressed: () {
-                NoteData().getUpdateData();
+                NoteData().getUpdateData(title: '', details: '');
               },
               child: AppText(text: "Update Data"),
             ),
