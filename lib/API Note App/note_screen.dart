@@ -98,7 +98,7 @@ class _NoteScreenState extends State<NoteScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              DetailsScreen(data: listData, index: index),
+                              DetailsScreen(data: listData, index: index, faceData: faceData,),
                         ),
                       );
                     },

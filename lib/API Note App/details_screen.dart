@@ -1,11 +1,12 @@
-import 'package:api/API%20Note%20App/edit_screen.dart';
+import 'package:api/API%20Note%20App/note_update_screen.dart';
 import 'package:api/custom_widget/app_text.dart';
 import 'package:flutter/material.dart';
 
 class DetailsScreen extends StatefulWidget {
-  const DetailsScreen({super.key, required this.data, required this.index,});
+  const DetailsScreen({super.key, required this.data, required this.index, required this.faceData,});
   final List<dynamic> data;
   final int index;
+  final VoidCallback faceData;
   @override
   State<DetailsScreen> createState() => _DetailsScreenState();
 }
@@ -42,9 +43,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
           final result = await Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>NoteEditScreeen(),
+              builder: (context) =>NoteUpdateScreeen(titleData: '${widget.data[widget.index]['title']}', detailsData: '${widget.data[widget.index]['details']}', id: widget.data[widget.index]['id'],),
             ),
           );
+          if(result == true){
+            widget.faceData();
+          }
         },
         child: Icon(Icons.edit, size: 30, color: Colors.white),
       ),

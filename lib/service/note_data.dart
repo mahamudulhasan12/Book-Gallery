@@ -58,13 +58,13 @@ class NoteData {
   }
 
   // var body = {"title": "Hello", "details": "Developer"};
-  Future<bool> getUpdateData({required String title, required String details}) async {
-    Uri url = Uri.parse("https://b5.dokanibahe.com/api/v1/notes/8");
+  Future<bool> getUpdateData({required String title, required String details,required dynamic id}) async {
+    Uri url = Uri.parse("https://b5.dokanibahe.com/api/v1/notes/$id");
     var body = {
       "title" : title,
       "details":details,
     };
-    var res = await http.put(
+    var res = await http.patch(
       url,
       headers: {
         "Accept": "application/json",
@@ -73,9 +73,12 @@ class NoteData {
       body: jsonEncode(body),
     );
     if (res.statusCode == 200) {
+      log("===${res.statusCode}===");
       return true;
 
+
     }else{
+
       return false;
     }
   }

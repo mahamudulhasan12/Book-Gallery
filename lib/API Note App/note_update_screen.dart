@@ -1,16 +1,44 @@
 import 'package:api/custom_widget/app_text.dart';
+import 'package:api/service/note_data.dart';
 import 'package:flutter/material.dart';
 
-class NoteEditScreeen extends StatefulWidget {
-  const NoteEditScreeen({super.key});
-
+class NoteUpdateScreeen extends StatefulWidget {
+  const NoteUpdateScreeen({super.key, required this.titleData, required this.detailsData, required this.id});
+  final String titleData;
+  final String detailsData;
+  final int id;
   @override
-  State<NoteEditScreeen> createState() => _NoteEditScreeenState();
+  State<NoteUpdateScreeen> createState() => _NoteUpdateScreeenState();
 }
 
-class _NoteEditScreeenState extends State<NoteEditScreeen> {
-  TextEditingController titleController = TextEditingController();
-  TextEditingController detailsController = TextEditingController();
+class _NoteUpdateScreeenState extends State<NoteUpdateScreeen> {
+  late TextEditingController titleController;
+  late TextEditingController detailsController ;
+  Future<void> updateData()async{
+    bool sucess =await NoteData().getUpdateData(title: titleController.text, details: detailsController.text, id: widget.id);
+    if(sucess == true){
+      setState(() {
+        Navigator.pop(context,true);
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    titleController = TextEditingController(
+      text: widget.titleData,
+    );
+    detailsController = TextEditingController(
+      text: widget.detailsData
+    );
+
+    super.initState();
+  }
+  void dispose(){
+    super.dispose();
+    titleController.dispose();
+    detailsController.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +81,8 @@ class _NoteEditScreeenState extends State<NoteEditScreeen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orange,
         onPressed: () {
+          updateData();
+          // Navigator.pop(context);
         },
         child: AppText(
           text: "Save",
