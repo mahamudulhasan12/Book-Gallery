@@ -1,5 +1,6 @@
 import 'package:api/API%20Note%20App/note_update_screen.dart';
 import 'package:api/custom_widget/app_text.dart';
+import 'package:api/service/note_data.dart';
 import 'package:flutter/material.dart';
 
 class DetailsScreen extends StatefulWidget {
@@ -12,6 +13,11 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
+  @override
+  // void initState() {
+  //   widget.faceData();
+  //   super.initState();
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,11 +53,16 @@ class _DetailsScreenState extends State<DetailsScreen> {
             ),
           );
           if(result == true){
-            widget.faceData();
+            setState(() {
+              widget.faceData();
+              widget.data[widget.index]['title'] = result["title"];
+              widget.data[widget.index]['details'] = result["details"];
+            });
           }
         },
         child: Icon(Icons.edit, size: 30, color: Colors.white),
       ),
+
     );
   }
 }

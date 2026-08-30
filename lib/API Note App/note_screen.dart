@@ -64,7 +64,7 @@ class _NoteScreenState extends State<NoteScreen> {
   void faceData() async {
     listData.clear();
 
-    Future.delayed(Duration(microseconds: 100));
+    Future.delayed(Duration(microseconds: 20));
     var data = await NoteData().getNoteData();
     // await NoteData().getCreateData(title: "", details: "");
 
@@ -174,10 +174,34 @@ class _NoteScreenState extends State<NoteScreen> {
           );
 
           if (result == true) {
-            NoteData().getNoteData();
+            faceData();
           }
         },
         child: Icon(Icons.add, size: 30, color: Colors.white),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(left: 2,right: 60,bottom: 8),
+        child: Row(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: TextField(
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    isDense: true,
+                    hintText: "Search",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide(width: 1)
+                    )
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

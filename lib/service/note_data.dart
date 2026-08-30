@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 
 class NoteData {
-  Future<List<Map<String, dynamic>>> getNoteData() async {
+  Future getNoteData() async {
     Uri url = Uri.parse("https://b5.dokanibahe.com/api/v1/notes");
     var res = await http.get(url);
 
@@ -18,7 +18,7 @@ class NoteData {
     }
   }
 
-  getDetailsData() async {
+  Future getDetailsData() async {
     Uri url = Uri.parse("https://b5.dokanibahe.com/api/v1/notes");
     var res = await http.get(url);
     // log("=====${res.statusCode}===");

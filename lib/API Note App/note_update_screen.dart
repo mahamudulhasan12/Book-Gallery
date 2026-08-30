@@ -15,11 +15,9 @@ class _NoteUpdateScreeenState extends State<NoteUpdateScreeen> {
   late TextEditingController titleController;
   late TextEditingController detailsController ;
   Future<void> updateData()async{
-    bool sucess =await NoteData().getUpdateData(title: titleController.text, details: detailsController.text, id: widget.id);
-    if(sucess == true){
-      setState(() {
-        Navigator.pop(context,true);
-      });
+    final sucess =await NoteData().getUpdateData(title: titleController.text, details: detailsController.text, id: widget.id);
+    if (sucess) {
+      Navigator.pop(context,true);
     }
   }
 
@@ -82,6 +80,7 @@ class _NoteUpdateScreeenState extends State<NoteUpdateScreeen> {
         backgroundColor: Colors.orange,
         onPressed: () {
           updateData();
+
           // Navigator.pop(context);
         },
         child: AppText(
