@@ -3,8 +3,9 @@ import 'package:api/service/note_data.dart';
 import 'package:flutter/material.dart';
 
 class NoteAddScreen extends StatefulWidget {
-  const NoteAddScreen({super.key, required this.listData});
+  const NoteAddScreen({super.key, required this.listData, required this.faceData});
   final List<dynamic> listData;
+  final VoidCallback faceData;
   @override
   State<NoteAddScreen> createState() => _NoteAddScreenState();
 }
@@ -76,9 +77,7 @@ class _NoteAddScreenState extends State<NoteAddScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orange,
         onPressed: () async{
-          setState(() {
 
-          });
           String titleData = titleController.text.trim();
           String description = detailsController.text.trim();
           if(titleData.isEmpty || description.isEmpty){
@@ -89,7 +88,7 @@ class _NoteAddScreenState extends State<NoteAddScreen> {
             setState(() {
 
             });
-            NoteData().getNoteData();
+            widget.faceData();
           }
           Navigator.pop(context);
         },

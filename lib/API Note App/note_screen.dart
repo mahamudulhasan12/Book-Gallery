@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:api/API%20Note%20App/details_screen.dart';
 import 'package:api/API%20Note%20App/note_add_screen.dart';
+import 'package:api/API%20Note%20App/search/search_screen.dart';
 import 'package:api/custom_widget/app_text.dart';
 import 'package:api/service/note_data.dart';
 import 'package:flutter/material.dart';
@@ -61,18 +62,16 @@ class _NoteScreenState extends State<NoteScreen> {
     }
   }
 
-  void faceData() async {
-    listData.clear();
-
-    Future.delayed(Duration(microseconds: 20));
+  Future<void> faceData() async {
     var data = await NoteData().getNoteData();
-    // await NoteData().getCreateData(title: "", details: "");
+
+    if (!mounted) return;
 
     setState(() {
+      listData.clear();
       listData.addAll(data);
     });
   }
-
   @override
   void initState() {
     faceData();
@@ -84,6 +83,12 @@ class _NoteScreenState extends State<NoteScreen> {
     return Scaffold(
       appBar: AppBar(
         title: AppText(text: "Note App", tSize: 18, tWeight: FontWeight.bold),
+        actions: [
+          IconButton(onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>NoteSearchScreen(listData: listData, faceData:  faceData,)));
+          }, icon: Icon(Icons.search_rounded,size: 30,)),
+          SizedBox(width: 10,),
+        ],
       ),
       body: Center(
         child: listData.isEmpty
@@ -169,7 +174,7 @@ class _NoteScreenState extends State<NoteScreen> {
           final result = await Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => NoteAddScreen(listData: listData),
+              builder: (context) => NoteAddScreen(listData: listData, faceData: faceData,),
             ),
           );
 
@@ -178,30 +183,6 @@ class _NoteScreenState extends State<NoteScreen> {
           }
         },
         child: Icon(Icons.add, size: 30, color: Colors.white),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(left: 2,right: 60,bottom: 8),
-        child: Row(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: TextField(
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    isDense: true,
-                    hintText: "Search",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide(width: 1)
-                    )
-                  ),
-                ),
-              ),
-            )
-          ],
-        ),
       ),
     );
   }
