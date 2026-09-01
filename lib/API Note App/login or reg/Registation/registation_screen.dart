@@ -19,8 +19,6 @@ class _RegistationScreenState extends State<RegistationScreen> {
   TextEditingController passController= TextEditingController();
   TextEditingController confirmPassController = TextEditingController();
   Future<void> registation()async{
-
-
     setState(() {
       loding = true;
     });
@@ -82,7 +80,7 @@ class _RegistationScreenState extends State<RegistationScreen> {
   }
   @override
   void initState() {
-
+    registation();
     super.initState();
   }
   bool isPassworld = false;
