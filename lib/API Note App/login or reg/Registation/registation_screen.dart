@@ -11,9 +11,78 @@ class RegistationScreen extends StatefulWidget {
 }
 
 class _RegistationScreenState extends State<RegistationScreen> {
+  final _formKey = GlobalKey<FormState>();
+  bool loding  = false;
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController= TextEditingController();
+  TextEditingController passController= TextEditingController();
+  TextEditingController confirmPassController = TextEditingController();
+  Future<void> registation()async{
+
+
+    setState(() {
+      loding = true;
+    });
+    try{
+      if(!mounted) return;
+      var status =await RegistationService().registationApi(name: nameController.text.trim(), email: emailController.text.trim(), pass: passController.text.trim(), confirmPass: confirmPassController.text.trim());
+      if(nameController.text.trim().isEmpty || emailController.text.trim().isEmpty || passController.text.trim().isEmpty || confirmPassController.text.trim().isEmpty){
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Please fill in all fields"),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+
+        return;
+      }
+      if(passController.text != confirmPassController.text){
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Password Don't match"),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+        return;
+      }
+      if(status !=null){
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("user created successfully!"),
+            backgroundColor: Colors.green,
+          ),
+        );
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("user created failed"),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }catch(error){
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Registration failed: ${error.toString()}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }finally{
+      if(mounted){
+        setState(() {
+          loding = false;
+        });
+      }
+    }
+  }
   @override
   void initState() {
-    RegistationService().registationApi();
+
     super.initState();
   }
   bool isPassworld = false;
@@ -48,6 +117,7 @@ class _RegistationScreenState extends State<RegistationScreen> {
             children: [
               // Name
               TextField(
+                controller: nameController,
                 keyboardType: TextInputType.name,
                 decoration: InputDecoration(
                   filled: true,
@@ -75,6 +145,7 @@ class _RegistationScreenState extends State<RegistationScreen> {
 
               // Email
               TextField(
+                controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   filled: true,
@@ -101,6 +172,7 @@ class _RegistationScreenState extends State<RegistationScreen> {
 
               // Password
               TextField(
+                controller: passController,
                 obscureText: !isPassworld,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
@@ -141,6 +213,7 @@ class _RegistationScreenState extends State<RegistationScreen> {
 
               // Confirm Password
               TextField(
+                controller: confirmPassController,
                 obscureText: !isPassworld,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
@@ -188,9 +261,7 @@ class _RegistationScreenState extends State<RegistationScreen> {
                   borderRadius: BorderRadius.circular(15),
                   color: Colors.redAccent,
                 ),
-                child: TextButton(onPressed: (){
-                  // Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
-                },
+                child: TextButton(onPressed: loding ? null : registation,
                   child: Text("Sign Up",style: TextStyle(
                       fontSize: 19,
                       fontWeight: FontWeight.bold,

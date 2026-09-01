@@ -1,4 +1,5 @@
 import 'package:api/API%20Note%20App/login%20or%20reg/Registation/registation_screen.dart';
+import 'package:api/service/login%20Service/login.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -29,12 +30,18 @@ class _LoginScreenState extends State<LoginScreen> {
         const SnackBar(content: Text("Please enter email and password")),
       );
       return;
+    }else{
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Login successful")));
     }
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text("Login successful")));
-  }
 
+  }
+  @override
+  void initState() {
+    LoginService().loginApi();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
