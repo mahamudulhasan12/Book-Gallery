@@ -14,10 +14,10 @@ class DetailsScreen extends StatefulWidget {
 
 class _DetailsScreenState extends State<DetailsScreen> {
   @override
-  // void initState() {
-  //   widget.faceData();
-  //   super.initState();
-  // }
+  void initState() {
+    widget.faceData();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,10 +54,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
           );
           if(result == true){
             setState(() {
-              widget.faceData();
-              widget.data[widget.index]['title'] = result["title"];
-              widget.data[widget.index]['details'] = result["details"];
+
             });
+            widget.faceData();
           }
         },
         child: Icon(Icons.edit, size: 30, color: Colors.white),

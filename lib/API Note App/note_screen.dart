@@ -66,7 +66,6 @@ class _NoteScreenState extends State<NoteScreen> {
     var data = await NoteData().getNoteData();
 
     if (!mounted) return;
-
     setState(() {
       listData.clear();
       listData.addAll(data);

@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:api/API%20Note%20App/login%20or%20reg/Registation/registation_screen.dart';
 import 'package:api/API%20Note%20App/note_screen.dart';
+import 'package:api/custom_widget/app_text.dart';
 import 'package:api/service/login%20Service/login.dart';
 import 'package:flutter/material.dart';
 
@@ -24,62 +27,46 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  Future<void> login()async {
-    try{
-    if(!mounted) return;
+  Future<void> login() async {
     if (emailController.text.trim().isEmpty ||
         passwordController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Please enter email and password"),backgroundColor: Colors.red,),
-      );
-      return;
-    }
-    setState(() {
-      isloding = true;
-    });
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //   const SnackBar(content: Text("Login Sucessfully"),backgroundColor: Colors.green,),
-    // );
-
-      var status = await LoginService().loginApi(email: emailController.text.trim(), password: passwordController.text.trim());
-      if(!mounted) return;
-      if(status != null){
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Login Sucessfully'),
-            backgroundColor: Colors.green,
-          ),
-        );
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>NoteScreen()));
-      }else{
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Invalid email or password'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-
-    }catch(error){
-      if (!mounted) return;
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Login failed ${error.toString()}'),
+        const SnackBar(
+          content: Text("Please enter email and password"),
           backgroundColor: Colors.red,
         ),
       );
-    }finally{
-      if(mounted){
-        setState(() {
-          isloding = false;
-        });
-      }
+      return;
+    }
+
+    bool status = await LoginService().loginApi(
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+    );
+
+    if (!mounted) return;
+
+    if (status == true) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Login Successfully"),
+          backgroundColor: Colors.green,
+        ),
+      );
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>NoteScreen()));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Login Failed"),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
   @override
   void initState() {
-    login();
+    // login();
+    // LoginService().LoginTest();
     super.initState();
   }
   @override
@@ -264,7 +251,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 58,
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: isloding ? null :login,
+                  onPressed:(){
+                    login();
+                  },
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
                     backgroundColor: Colors.transparent,

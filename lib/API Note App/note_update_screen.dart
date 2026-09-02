@@ -65,7 +65,7 @@ class _NoteUpdateScreeenState extends State<NoteUpdateScreeen> {
             controller: detailsController,
             maxLines: 10,
             decoration: InputDecoration(
-              hintText: "Descripton",
+              hintText: "description",
               hintStyle: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
@@ -80,7 +80,6 @@ class _NoteUpdateScreeenState extends State<NoteUpdateScreeen> {
         backgroundColor: Colors.orange,
         onPressed: () {
           updateData();
-
           // Navigator.pop(context);
         },
         child: AppText(

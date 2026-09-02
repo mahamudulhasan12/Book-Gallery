@@ -24,11 +24,8 @@ class NoteData {
     // log("=====${res.statusCode}===");
     if (res.statusCode == 200) {
       var data = jsonDecode(res.body);
-      // log("======${data}====");
       log("Title: ${data['data']}");
-    } else if (res.statusCode == 404) {
-      log("Data Not Found");
-    } else {
+    }else {
       log("Not Found");
     }
   }
