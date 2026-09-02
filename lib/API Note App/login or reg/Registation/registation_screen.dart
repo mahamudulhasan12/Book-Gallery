@@ -45,7 +45,7 @@ class _RegistationScreenState extends State<RegistationScreen> {
         );
         return;
       }
-      if(status !=null){
+      if(status ==true){
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text("user created successfully!"),
@@ -80,7 +80,7 @@ class _RegistationScreenState extends State<RegistationScreen> {
   }
   @override
   void initState() {
-    registation();
+    // registation();
     super.initState();
   }
   bool isPassworld = false;

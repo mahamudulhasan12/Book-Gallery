@@ -28,7 +28,7 @@ class RegistationService {
       );
       if (res.statusCode == 200 || res.statusCode == 201) {
         log("=========${res.statusCode}========");
-        return res.body;
+        return true;
       } else {
         log("=========${res.statusCode}========");
         return false;
