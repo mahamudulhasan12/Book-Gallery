@@ -4,20 +4,34 @@ import 'package:api/service/note_data.dart';
 import 'package:flutter/material.dart';
 
 class DetailsScreen extends StatefulWidget {
-  const DetailsScreen({super.key, required this.data, required this.index, required this.faceData,});
+  const DetailsScreen({super.key, required this.data, required this.index, required this.faceData, });
+  final VoidCallback faceData;
   final List<dynamic> data;
   final int index;
-  final VoidCallback faceData;
+  
   @override
   State<DetailsScreen> createState() => _DetailsScreenState();
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
+  Future<void> _detailsNote(int id)async{
+    try{
+      var satus =await NoteData().getDetailsData(id);
+      if(satus != null){
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: AppText(text: 'Note View')));
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: AppText(text: 'data not found')));
+      }
+    }catch(error){
+      // log("$error");
+    }
+  }
   @override
   void initState() {
-    widget.faceData();
+    _detailsNote(widget.data[widget.index]['id']);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +70,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
             setState(() {
 
             });
-            widget.faceData();
+             widget.faceData();
           }
         },
         child: Icon(Icons.edit, size: 30, color: Colors.white),

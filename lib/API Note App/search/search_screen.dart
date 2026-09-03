@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../custom_widget/app_text.dart';
 class NoteSearchScreen extends StatefulWidget {
   const NoteSearchScreen({super.key, required this.listData, required this.faceData});
+
   final List listData;
   final VoidCallback faceData;
   @override

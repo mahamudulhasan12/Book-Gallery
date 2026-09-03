@@ -18,15 +18,17 @@ class NoteData {
     }
   }
 
-  Future getDetailsData() async {
+  Future getDetailsData(int id) async {
     Uri url = Uri.parse("https://b5.dokanibahe.com/api/v1/notes");
     var res = await http.get(url);
     // log("=====${res.statusCode}===");
     if (res.statusCode == 200) {
-      var data = jsonDecode(res.body);
-      log("Title: ${data['data']}");
+        var data =jsonDecode(res.body);
+      return data;
+      // log("Title: ${data['$id']}");
     }else {
       log("Not Found");
+      return false;
     }
   }
 

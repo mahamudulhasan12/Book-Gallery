@@ -2,7 +2,6 @@ import 'package:api/API%20Note%20App/login%20or%20reg/Login/login_screen.dart';
 import 'package:api/service/registation%20Service/registation.dart';
 import 'package:flutter/material.dart';
 
-
 class RegistationScreen extends StatefulWidget {
   const RegistationScreen({super.key});
 

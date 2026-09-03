@@ -16,6 +16,18 @@ class NoteScreen extends StatefulWidget {
 
 class _NoteScreenState extends State<NoteScreen> {
   List listData = [];
+  Future<void> _detailsNote(int id)async{
+    try{
+      var satus =await NoteData().getDetailsData(id);
+      if(satus != null){
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: AppText(text: 'Note View')));
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: AppText(text: 'data not found')));
+      }
+    }catch(error){
+      log("$error");
+    }
+  }
   Future<void> deleteNote(int id, int index)async{
     bool? confirmDelete = await showDialog(
       context: context,
@@ -61,7 +73,6 @@ class _NoteScreenState extends State<NoteScreen> {
       );
     }
   }
-
   Future<void> faceData() async {
     var data = await NoteData().getNoteData();
 
@@ -97,14 +108,20 @@ class _NoteScreenState extends State<NoteScreen> {
                 itemCount: listData.length,
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
+                    onTap: () async{
+                      final result =await Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              DetailsScreen(data: listData, index: index, faceData: faceData,),
+                              DetailsScreen(data: listData, index: index, faceData:faceData,),
                         ),
                       );
+                      setState(() {
+
+                      });
+                      if(result == true){
+                        faceData();
+                      }
                     },
                     child: Card(
                       // color: Colors.white,

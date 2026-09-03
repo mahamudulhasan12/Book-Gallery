@@ -3,7 +3,8 @@ import 'package:api/service/note_data.dart';
 import 'package:flutter/material.dart';
 
 class NoteUpdateScreeen extends StatefulWidget {
-  const NoteUpdateScreeen({super.key, required this.titleData, required this.detailsData, required this.id});
+  const NoteUpdateScreeen({super.key, required this.titleData, required this.detailsData, required this.id,});
+
   final String titleData;
   final String detailsData;
   final int id;
@@ -16,6 +17,7 @@ class _NoteUpdateScreeenState extends State<NoteUpdateScreeen> {
   late TextEditingController detailsController ;
   Future<void> updateData()async{
     final sucess =await NoteData().getUpdateData(title: titleController.text, details: detailsController.text, id: widget.id);
+
     if (sucess) {
       Navigator.pop(context,true);
     }
