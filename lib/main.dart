@@ -1,6 +1,6 @@
 import 'package:api/API%20Note%20App/login%20or%20reg/Login/login_screen.dart';
-import 'package:api/view/api_crud_operation.dart';
-import 'package:api/view/home/home_screen.dart';
+import 'package:api/api_data_face/api_crud_operation.dart';
+import 'package:api/api_data_face/home/home_screen.dart';
 import 'package:api/API%20Note%20App/note_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
